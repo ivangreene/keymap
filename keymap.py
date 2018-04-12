@@ -111,27 +111,28 @@ def map_keys(key1, key2, swap=False):
     print("Invalid key: %s" % (key1 if src is None else key2))
     exit(1)
 
-if len(sys.argv) < 2:
-  show_help()
-  exit(1)
+if __name__ == "__main__":
+  if len(sys.argv) < 2:
+    show_help()
+    exit(1)
 
-command = sys.argv[1]
+  command = sys.argv[1]
 
-key_args = sys.argv[2:]
-key_count = len(key_args)
+  key_args = sys.argv[2:]
+  key_count = len(key_args)
 
-if command == 'list':
-  print_mappings(get_mappings())
-elif command == 'keys':
-  key_names()
-elif command == 'map' and key_count == 2:
-  map_keys(key_args[0], key_args[1])
-elif command == 'swap' and key_count == 2:
-  map_keys(key_args[0], key_args[1], True)
-elif command == 'help':
-  show_help()
-elif command == 'unmap' and key_count >= 1:
-  unmap(key_args)
-else:
-  show_help()
-  exit(1)
+  if command == 'list':
+    print_mappings(get_mappings())
+  elif command == 'keys':
+    key_names()
+  elif command == 'map' and key_count == 2:
+    map_keys(key_args[0], key_args[1])
+  elif command == 'swap' and key_count == 2:
+    map_keys(key_args[0], key_args[1], True)
+  elif command == 'help':
+    show_help()
+  elif command == 'unmap' and key_count >= 1:
+    unmap(key_args)
+  else:
+    show_help()
+    exit(1)
