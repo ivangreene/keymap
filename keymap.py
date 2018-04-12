@@ -63,7 +63,7 @@ def remove_dups(mappings):
 
 def get_mappings():
   out = subprocess.check_output(["hidutil", "property", "--get",
-    "UserKeyMapping"])
+    "UserKeyMapping"]).decode("utf-8")
   parsed_mappings = re.findall(r'(?:{\s*HIDKeyboardModifierMappingDst = ([0-9]+);\s*'
     'HIDKeyboardModifierMappingSrc = ([0-9]+);\s*}|{\s*'
     'HIDKeyboardModifierMappingSrc = ([0-9]+);\s*HIDKeyboardModifierMappingDst'
