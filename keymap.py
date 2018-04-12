@@ -20,13 +20,10 @@ keys = ("a b c d e f g h i j k l m n o p q r s t u v w x y z 1 2 3 4 5 6 7 8"
         " left down up numlock keypad/ keypad* keypad- keypad+ keypadenter"
         " keypad1 keypad2 keypad3 keypad4 keypad5 keypad6 keypad7 keypad8"
         " keypad9 keypad0 keypad. non-us| application power keypad= f13 f14"
-        " f15 f16 f17 f18 f19 f20 f21 f22 f23 f24 execute help menu select stop again undo cut copy paste find mute volume+ volume-").split(' ')
+        " f15 f16 f17 f18 f19 f20 f21 f22 f23 f24 execute help menu select"
+        " stop again undo cut copy paste find mute volume+ volume-").split(' ')
 
-keys.extend([None] * 65) # codes 116--223
-
-keys.extend("xor ^ % < > & && | || :".split(' '))
-
-keys.extend([None] * 19) # codes 116--223
+keys.extend([None] * 94) # codes 130--223
 
 keys.extend("leftctrl leftshift leftalt leftcmd rightctrl rightshift rightalt"
         " rightcmd".split(' '))
