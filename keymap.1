@@ -1,0 +1,44 @@
+.TH KEYMAP 1
+.SH NAME
+keymap \- remap keyboard keys
+.SH SYNOPSIS
+.B keymap
+map \fI\,SOURCE DEST\/\fR
+.br
+.B keymap
+swap \fI\,KEY1 KEY2\/\fR
+.br
+.B keymap
+unmap \fIKEYS\fR...
+.br
+.B keymap
+list
+.br
+.B keymap
+keys
+.br
+.B keymap
+help
+.SH COMMANDS
+.TP
+\fBmap\fR \fI\,SOURCE DEST\/\fR
+\- maps SOURCE to DEST
+.TP
+\fBswap\fR \fI\,KEY1 KEY2\/\fR
+\- maps KEY1 to KEY2 and vice-versa
+.TP
+\fBunmap\fR \fIKEYS\fR...
+\- remove mappings with any of KEYS as their source
+.TP
+\fBlist\fR
+\- list your current mappings
+.TP
+\fBkeys\fR
+\- show a list of key names
+.TP
+\fBhelp\fR
+\- show a help message
+.SH AUTHOR
+Ivan Greene <ivan@ivan.sh>
+.SH REPOSITORY
+https://github.com/ivangreene/keymap
