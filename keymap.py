@@ -96,14 +96,17 @@ def unmap(key_args):
   mappings = [mapping for mapping in get_mappings() if int(mapping['src']) not in key_args]
   set_mappings(mappings)
 
+def key_mapping(src, dst):
+  return { 'src': src, 'dst': dst }
+
 def map_keys(key1, key2, swap=False):
   src = get_key_code(key1)
   dst = get_key_code(key2)
   if src is not None and dst is not None:
     mappings = get_mappings()
-    mappings.append({ 'src': src, 'dst': dst })
+    mappings.append(key_mapping(src, dst))
     if swap:
-      mappings.append({ 'src': dst, 'dst': src })
+      mappings.append(key_mapping(src, dst))
     mappings = remove_dups(mappings)
     #print_mappings(mappings)
     set_mappings(mappings)
