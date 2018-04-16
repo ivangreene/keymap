@@ -106,7 +106,7 @@ def map_keys(key1, key2, swap=False):
     mappings = get_mappings()
     mappings.append(key_mapping(src, dst))
     if swap:
-      mappings.append(key_mapping(src, dst))
+      mappings.append(key_mapping(dst, src))
     mappings = remove_dups(mappings)
     #print_mappings(mappings)
     set_mappings(mappings)
