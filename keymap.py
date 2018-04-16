@@ -8,7 +8,7 @@ import subprocess
 import textwrap
 import platform
 
-if platform.mac_ver()[0] != '' and int(
+if platform.mac_ver()[0] == '' or int(
     platform.mac_ver()[0].split('.')[1]) < 12:
   print("This tool requires macOS >= 10.12")
   exit(1)
