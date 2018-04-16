@@ -25,5 +25,12 @@ class TestKeymap(unittest.TestCase):
       # remove_dups should remove duplicate src entries and retain the latest
       # in the list
 
+  def test_format_list_item(self):
+    akey = keymap.get_key_code('a')
+    bkey = keymap.get_key_code('b')
+    item = keymap.key_mapping(akey, bkey)
+    listitem = keymap.format_list_item(item)
+    self.assertEqual(listitem, '{"HIDKeyboardModifierMappingSrc":0x700000004,"HIDKeyboardModifierMappingDst":0x700000005}')
+
 if __name__ == '__main__':
   unittest.main()
