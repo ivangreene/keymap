@@ -55,30 +55,33 @@ def remove_dups(mappings):
   unique = []
   mappings.reverse()
   for mapping in mappings:
-    if int(mapping['src']) not in seen:
+    if mapping['src'] not in seen:
       unique.append(mapping)
       seen.append(mapping['src'])
   unique.reverse()
   return unique
 
-def get_mappings():
-  out = subprocess.check_output(["hidutil", "property", "--get",
-    "UserKeyMapping"]).decode("utf-8")
-  parsed_mappings = re.findall(r'(?:{\s*HIDKeyboardModifierMappingDst = ([0-9]+);\s*'
-    'HIDKeyboardModifierMappingSrc = ([0-9]+);\s*}|{\s*'
-    'HIDKeyboardModifierMappingSrc = ([0-9]+);\s*HIDKeyboardModifierMappingDst'
-    '= ([0-9]+);\s*})', out)
+def parse_mappings(sys_output):
+  parsed = re.findall(r'{\s*HIDKeyboardModifierMapping(Dst|Src) ='
+    ' ([0-9]+);\s*' 'HIDKeyboardModifierMapping(Dst|Src) = ([0-9]+);\s*}',
+    sys_output)
   mappings = []
-  for mapping in parsed_mappings:
-    if mapping[0] == '':
-      mappings.append({ 'src': mapping[2], 'dst': mapping[3] })
-    else:
-      mappings.append({ 'src': mapping[1], 'dst': mapping[0] })
+  for mapping in parsed:
+    mappings.append({ mapping[0].lower(): int(mapping[1]),
+      mapping[2].lower(): int(mapping[3]) })
   return mappings
 
-def set_mappings(mappings):
-  key_mapping = ('{"UserKeyMapping":['
+def get_system_mappings():
+  out = subprocess.check_output(["hidutil", "property", "--get",
+    "UserKeyMapping"]).decode("utf-8")
+  return parse_mappings(out)
+
+def format_mappings_for_setting(mappings):
+  return ('{"UserKeyMapping":['
       + ','.join(list(map(format_list_item, mappings))) + ']}')
+
+def set_mappings(mappings):
+  key_mapping = format_mappings_for_setting(mappings)
   with open(os.devnull, 'w') as devnull:
     code = subprocess.check_call(["hidutil", "property", "--set", key_mapping],
         stdout=devnull)
@@ -88,27 +91,30 @@ def set_mappings(mappings):
 
 def format_list_item(mapping):
   return ('{"HIDKeyboardModifierMappingSrc":0x%02x,'
-          '"HIDKeyboardModifierMappingDst":0x%02x}' % (int(mapping['src']),
-          int(mapping['dst'])))
+          '"HIDKeyboardModifierMappingDst":0x%02x}' % (mapping['src'],
+          mapping['dst']))
+
+def remove_keys(mappings, key_args):
+  mappings = [mapping for mapping in mappings if int(mapping['src']) not in key_args]
+  return mappings
 
 def unmap(key_args):
   key_args = list(map(get_key_code, key_args))
-  mappings = [mapping for mapping in get_mappings() if int(mapping['src']) not in key_args]
+  mappings = remove_keys(get_system_mappings(), key_args)
   set_mappings(mappings)
 
 def key_mapping(src, dst):
-  return { 'src': src, 'dst': dst }
+  return { 'src': int(src), 'dst': int(dst) }
 
 def map_keys(key1, key2, swap=False):
   src = get_key_code(key1)
   dst = get_key_code(key2)
   if src is not None and dst is not None:
-    mappings = get_mappings()
+    mappings = get_system_mappings()
     mappings.append(key_mapping(src, dst))
     if swap:
       mappings.append(key_mapping(dst, src))
     mappings = remove_dups(mappings)
-    #print_mappings(mappings)
     set_mappings(mappings)
   else:
     print("Invalid key: %s" % (key1 if src is None else key2))
@@ -125,7 +131,7 @@ if __name__ == "__main__":
   key_count = len(key_args)
 
   if command == 'list':
-    print_mappings(get_mappings())
+    print_mappings(get_system_mappings())
   elif command == 'keys':
     key_names()
   elif command == 'map' and key_count == 2:
