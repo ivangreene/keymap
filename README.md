@@ -14,6 +14,12 @@ leftcmd -> leftshift
 
 $ keymap unmap a leftshift leftcmd # remove mappings
 
+# save your mappings to filename, default is ~/.keymaprc
+$ keymap save [filename]
+
+# load your mappings from filename, default is ~/.keymaprc
+$ keymap load [filename]
+
 $ keymap keys # show available keys
 a b c d e f g h i j k l m n o p q r s t u v w x y z 1 2 3 4 5 6 7 8 9
 0 return escape delete tab space - = [ ] \ # ; ' ` , . / caps f1 f2 f3
@@ -26,6 +32,17 @@ f20 f21 f22 f23 f24 execute help menu select stop again undo cut copy
 paste find mute volume+ volume- leftctrl leftshift leftalt leftcmd
 rightctrl rightshift rightalt rightcmd
 ```
+
+## Installation
+If you have Homebrew, you can install like this:
+
+```bash
+$ brew tap ivangreene/keymap
+$ brew install keymap
+```
+
+Otherwise, `keymap.py` is a standalone python executable that you can copy
+somewhere in your PATH, and `keymap.1` is the man page.
 
 ## Issues
 - Some keys don't work as a source (for example, you can do `map g volume+`,
