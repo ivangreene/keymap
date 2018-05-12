@@ -45,10 +45,13 @@ def get_key_code(key):
 def get_key_name(code):
   return keys[(0x700000000 ^ int(code)) - 4]
 
+def format_mapping_for_print(mapping):
+  return ("%s -> %s" % (get_key_name(mapping['src']),
+      get_key_name(mapping['dst'])))
+
 def print_mappings(mappings):
   for mapping in mappings:
-    print("%s -> %s" % (get_key_name(mapping['src']),
-      get_key_name(mapping['dst'])))
+    print(format_mapping_for_print(mapping))
 
 def remove_dups(mappings):
   seen = []
