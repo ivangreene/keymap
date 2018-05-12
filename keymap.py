@@ -34,7 +34,7 @@ def show_help():
 {0} swap <key> <key> # Swap two keys
 {0} unmap <keys>... # Remove one or more mappings
 {0} list # List current key mappings
-{0} keys # Show key names""".format(sys.argv[0]))
+{0} keys # Show key names""".format(os.path.basename(__file__)))
 
 def key_names():
   print('\n'.join(textwrap.wrap(' '.join([key for key in keys if key is not None]))))
