@@ -75,8 +75,10 @@ def load_mappings(filename=None):
     for line in rcfile:
       match = re.search(r'^(\S+) -> (\S+)$', line)
       if match:
-        src = get_key_code(match.group(1))
-        dst = get_key_code(match.group(2))
+        key1 = match.group(1)
+        key2 = match.group(2)
+        src = get_key_code(key1)
+        dst = get_key_code(key2)
         if src is not None and dst is not None:
           mappings.append(key_mapping(src, dst))
         else:
