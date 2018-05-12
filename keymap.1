@@ -15,6 +15,12 @@ unmap \fIKEYS\fR...
 list
 .br
 .B keymap
+save [\fIFILENAME\fR]
+.br
+.B keymap
+load [\fIFILENAME\fR]
+.br
+.B keymap
 keys
 .br
 .B keymap
@@ -32,6 +38,12 @@ help
 .TP
 \fBlist\fR
 \- list your current mappings
+.TP
+\fBsave\fR [\fIFILENAME\fR]
+\- write your mappings to \fIFILENAME\fR (default is ~/.keymaprc)
+.TP
+\fBload\fR [\fIFILENAME\fR]
+\- load your mappings from \fIFILENAME\fR (default is ~/.keymaprc)
 .TP
 \fBkeys\fR
 \- show a list of key names
