@@ -34,6 +34,7 @@ def show_help():
 {0} swap <key> <key> # Swap two keys
 {0} unmap <keys>... # Remove one or more mappings
 {0} list # List current key mappings
+{0} save [file] # Save your mappings to file (default is ~/.keymaprc)
 {0} keys # Show key names""".format(os.path.basename(__file__)))
 
 def key_names():
@@ -48,6 +49,21 @@ def get_key_name(code):
 def format_mapping_for_print(mapping):
   return ("%s -> %s" % (get_key_name(mapping['src']),
       get_key_name(mapping['dst'])))
+
+def save_mappings(filename=None):
+  if filename is None:
+    filename = os.path.join(os.path.expanduser('~'), '.keymaprc')
+  mappings = get_system_mappings()
+  if len(mappings) > 0:
+    rcfile = open(filename, 'w')
+    for mapping in mappings:
+      rcfile.write(format_mapping_for_print(mapping) + '\n')
+    rcfile.close()
+    print("Saved to " + filename + ":")
+    print_mappings(mappings)
+  else:
+    print("No mappings to save!")
+    exit(1)
 
 def print_mappings(mappings):
   for mapping in mappings:
@@ -143,6 +159,8 @@ if __name__ == "__main__":
     map_keys(key_args[0], key_args[1], True)
   elif command == 'help':
     show_help()
+  elif command == 'save':
+    save_mappings(None if key_count == 0 else key_args[0])
   elif command == 'unmap' and key_count >= 1:
     unmap(key_args)
   else:
