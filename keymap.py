@@ -35,6 +35,7 @@ def show_help():
 {0} unmap <keys>... # Remove one or more mappings
 {0} list # List current key mappings
 {0} save [file] # Save your mappings to file (default is ~/.keymaprc)
+{0} load [file] # Load your mappings from file (default is ~/.keymaprc)
 {0} keys # Show key names""".format(os.path.basename(__file__)))
 
 def key_names():
@@ -63,6 +64,28 @@ def save_mappings(filename=None):
     print_mappings(mappings)
   else:
     print("No mappings to save!")
+    exit(1)
+
+def load_mappings(filename=None):
+  if filename is None:
+    filename = os.path.join(os.path.expanduser('~'), '.keymaprc')
+  if os.path.isfile(filename):
+    rcfile = open(filename, 'r')
+    mappings = []
+    for line in rcfile:
+      match = re.search(r'^(\S+) -> (\S+)$', line)
+      if match:
+        src = get_key_code(match.group(1))
+        dst = get_key_code(match.group(2))
+        if src is not None and dst is not None:
+          mappings.append(key_mapping(src, dst))
+        else:
+          print("Invalid key: %s" % (key1 if src is None else key2))
+    mappings = remove_dups(mappings)
+    print("Loaded from " + filename + ":")
+    set_mappings(mappings)
+  else:
+    print("Could not read file: " + filename)
     exit(1)
 
 def print_mappings(mappings):
@@ -161,6 +184,8 @@ if __name__ == "__main__":
     show_help()
   elif command == 'save':
     save_mappings(None if key_count == 0 else key_args[0])
+  elif command == 'load':
+    load_mappings(None if key_count == 0 else key_args[0])
   elif command == 'unmap' and key_count >= 1:
     unmap(key_args)
   else:
