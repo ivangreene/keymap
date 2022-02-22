@@ -37,8 +37,7 @@ rightctrl rightshift rightalt rightcmd
 If you have Homebrew, you can install like this:
 
 ```bash
-$ brew tap ivangreene/keymap
-$ brew install keymap
+$ brew install ivangreene/keymap/keymap
 ```
 
 Otherwise, `keymap.py` is a standalone python executable that you can copy
