@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
 import sys
@@ -8,8 +8,9 @@ import subprocess
 import textwrap
 import platform
 
-if platform.mac_ver()[0] == '' or int(
-    platform.mac_ver()[0].split('.')[1]) < 12:
+if platform.mac_ver()[0] == '' or (
+    int(platform.mac_ver()[0].split('.')[0]) <= 10
+        and int(platform.mac_ver()[0].split('.')[1]) < 12):
   print("This tool requires macOS >= 10.12")
   exit(1)
 
