@@ -53,5 +53,5 @@ somewhere in your PATH, and `keymap.1` is the man page.
 
 #### Resources:
 - Apple Developer: Technical Note TN2450, Remapping Keys in macOS 10.12 Sierra [https://developer.apple.com/library/content/technotes/tn2450/_index.html](https://developer.apple.com/library/content/technotes/tn2450/_index.html)
-- usb.org HID Usage Tables [http://www.usb.org/developers/hidpage/Hut1_12v2.pdf](http://www.usb.org/developers/hidpage/Hut1_12v2.pdf) - dead link - archived at (https://web.archive.org/web/20180826215839/http://www.usb.org/developers/hidpage/Hut1_12v2.pdf)[https://web.archive.org/web/20180826215839/http://www.usb.org/developers/hidpage/Hut1_12v2.pdf]
+- usb.org HID Usage Tables [http://www.usb.org/developers/hidpage/Hut1_12v2.pdf](http://www.usb.org/developers/hidpage/Hut1_12v2.pdf) - dead link - archived at [https://web.archive.org/web/20180826215839/http://www.usb.org/developers/hidpage/Hut1_12v2.pdf](https://web.archive.org/web/20180826215839/http://www.usb.org/developers/hidpage/Hut1_12v2.pdf)
 - Keyboard Event Viewer [https://w3c.github.io/uievents/tools/key-event-viewer.html](https://w3c.github.io/uievents/tools/key-event-viewer.html)
