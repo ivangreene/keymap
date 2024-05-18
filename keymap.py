@@ -14,15 +14,17 @@ if platform.mac_ver()[0] == '' or (
   print("This tool requires macOS >= 10.12")
   exit(1)
 
-keys = ("a b c d e f g h i j k l m n o p q r s t u v w x y z 1 2 3 4 5 6 7 8"
-        " 9 0 return escape delete tab space - = [ ] \ # ; ' ` , . / caps f1"
+keys = [None] * 4
+
+keys.extend(("a b c d e f g h i j k l m n o p q r s t u v w x y z 1 2 3 4 5 6 7 8"
+        " 9 0 return escape delete tab space - = [ ] \\ # ; ' ` , . / caps f1"
         " f2 f3 f4 f5 f6 f7 f8 f9 f10 f11 f12 printscreen brightness-"
         " brightness+ insert home pageup deleteforward end pagedown right"
         " left down up numlock keypad/ keypad* keypad- keypad+ keypadenter"
         " keypad1 keypad2 keypad3 keypad4 keypad5 keypad6 keypad7 keypad8"
         " keypad9 keypad0 keypad. non-us| application power keypad= f13 f14"
         " f15 f16 f17 f18 f19 f20 f21 f22 f23 f24 execute help menu select"
-        " stop again undo cut copy paste find mute volume+ volume-").split(' ')
+        " stop again undo cut copy paste find mute volume+ volume-").split(' '))
 
 keys.extend([None] * 94) # codes 130--223
 
@@ -43,10 +45,10 @@ def key_names():
   print('\n'.join(textwrap.wrap(' '.join([key for key in keys if key is not None]))))
 
 def get_key_code(key):
-  return (0x700000000 | keys.index(key) + 4) if key in keys else None
+  return (0x700000000 | keys.index(key)) if key in keys else None
 
 def get_key_name(code):
-  return keys[(0x700000000 ^ int(code)) - 4]
+  return keys[(0x700000000 ^ int(code))]
 
 def format_mapping_for_print(mapping):
   return ("%s -> %s" % (get_key_name(mapping['src']),
@@ -108,7 +110,7 @@ def remove_dups(mappings):
 
 def parse_mappings(sys_output):
   parsed = re.findall(r'{\s*HIDKeyboardModifierMapping(Dst|Src) ='
-    ' ([0-9]+);\s*' 'HIDKeyboardModifierMapping(Dst|Src) = ([0-9]+);\s*}',
+    r' ([0-9]+);\s*' r'HIDKeyboardModifierMapping(Dst|Src) = ([0-9]+);\s*}',
     sys_output)
   mappings = []
   for mapping in parsed:
