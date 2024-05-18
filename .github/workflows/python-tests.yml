@@ -16,4 +16,4 @@ jobs:
         with:
           python-version: '3.12'
       - name: Run tests
-        run: python test.py
+        run: python -W error test.py
