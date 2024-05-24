@@ -2,7 +2,7 @@
 set -e
 
 # Save and unmap current user mappings
-./keymap.py save tmp.keymaprc
+./keymap.py list > tmp.keymaprc
 ./keymap.py list | cut -d ' ' -f 1 | xargs -n1 ./keymap.py unmap
 
 ./keymap.py list | wc -l | grep 0
