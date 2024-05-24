@@ -12,6 +12,27 @@ set -e
 ./keymap.py list | grep 'escape -> caps'
 ./keymap.py list | wc -l | grep 2
 
+expected_user_key_mapping=$(cat <<'EOF'
+(
+        {
+        HIDKeyboardModifierMappingDst = 30064771113;
+        HIDKeyboardModifierMappingSrc = 30064771129;
+    },
+        {
+        HIDKeyboardModifierMappingDst = 30064771129;
+        HIDKeyboardModifierMappingSrc = 30064771113;
+    }
+)
+EOF
+)
+
+if [ "$expected_user_key_mapping" != "$(hidutil property --get UserKeyMapping)" ]; then
+  echo "hidutil UserKeyMapping did not match expected value"
+  echo "Expected: $expected_user_key_mapping"
+  echo "Actual: $(hidutil property --get UserKeyMapping)"
+  exit 1
+fi
+
 ./keymap.py save
 
 cat ~/.keymaprc | grep 'caps -> escape'
