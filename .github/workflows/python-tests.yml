@@ -15,5 +15,7 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Run tests
+      - name: Run python tests
         run: python -W error test.py
+      - name: Run CLI tests
+        run: ./test.sh
