@@ -59,10 +59,9 @@ def save_mappings(filename=None):
     filename = os.path.join(os.path.expanduser('~'), '.keymaprc')
   mappings = get_system_mappings()
   if len(mappings) > 0:
-    rcfile = open(filename, 'w')
-    for mapping in mappings:
-      rcfile.write(format_mapping_for_print(mapping) + '\n')
-    rcfile.close()
+    with open(filename, 'w') as rcfile:
+      for mapping in mappings:
+        rcfile.write(format_mapping_for_print(mapping) + '\n')
     print("Saved to " + filename + ":")
     print_mappings(mappings)
   else:
@@ -73,19 +72,19 @@ def load_mappings(filename=None):
   if filename is None:
     filename = os.path.join(os.path.expanduser('~'), '.keymaprc')
   if os.path.isfile(filename):
-    rcfile = open(filename, 'r')
     mappings = []
-    for line in rcfile:
-      match = re.search(r'^(\S+) -> (\S+)$', line)
-      if match:
-        key1 = match.group(1)
-        key2 = match.group(2)
-        src = get_key_code(key1)
-        dst = get_key_code(key2)
-        if src is not None and dst is not None:
-          mappings.append(key_mapping(src, dst))
-        else:
-          print("Invalid key: %s" % (key1 if src is None else key2))
+    with open(filename, 'r') as rcfile:
+      for line in rcfile:
+        match = re.search(r'^(\S+) -> (\S+)$', line)
+        if match:
+          key1 = match.group(1)
+          key2 = match.group(2)
+          src = get_key_code(key1)
+          dst = get_key_code(key2)
+          if src is not None and dst is not None:
+            mappings.append(key_mapping(src, dst))
+          else:
+            print("Invalid key: %s" % (key1 if src is None else key2))
     mappings = remove_dups(mappings)
     print("Loaded from " + filename + ":")
     set_mappings(mappings)
