@@ -43,6 +43,13 @@ $ brew install ivangreene/keymap/keymap
 Otherwise, `keymap.py` is a standalone python executable that you can copy
 somewhere in your PATH, and `keymap.1` is the man page.
 
+### Load at reboot
+To load your saved mappings when your computer starts up, you can add
+this to your crontab (edit with `crontab -e`):
+```crontab
+@reboot /opt/homebrew/bin/keymap load > /dev/null
+```
+
 ## Issues
 - Some keys don't work as a source (for example, you can do `map g volume+`,
   but `map volume+ g` doesn't work as expected.)
